@@ -1,0 +1,24 @@
+#!/bin/bash
+. /vagrant/lib/install.sh
+
+_update_apt
+
+_install_mysql
+_allow_mysql_connect_from_any_host
+_write_mysql_config_to_mycnf
+
+_install_php
+_remove_default_pool
+_chown_php_configs
+_enable_xdebug_profile
+_install_composer
+_create_directory_for_sessions
+
+_install_nginx
+_basic_configure_nginx
+_write_php_location_for_nginx
+_create_configs_for_all_projects
+_run_install_on_each_project
+
+_install_helper_software
+_restart_all_servers

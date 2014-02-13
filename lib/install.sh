@@ -1,29 +1,3 @@
-#!/bin/bash
-
-function _do_magic {
-  _update_apt
-
-  _install_mysql
-  _allow_mysql_connect_from_any_host
-  _write_mysql_config_to_mycnf
-
-  _install_php
-  _remove_default_pool
-  _chown_php_configs
-  _enable_xdebug_profile
-  _install_composer
-  _create_directory_for_sessions
-  
-  _install_nginx
-  _basic_configure_nginx
-  _write_php_location_for_nginx
-  _create_configs_for_all_projects
-  _run_install_on_each_project
-
-  _install_helper_software
-  _restart_all_servers
-}
-
 function _remove_default_pool {
   rm /etc/php5/fpm/pool.d/www.conf
 }
@@ -58,7 +32,7 @@ function _create_configs_for_all_projects {
 function _create_mysql_database_if_we_have_dump {
   NAME=$1
   if [ -f /vagrant/prj/$NAME/dump.sql ] ; then
-    echo "create database \`$NAME\` character set utf8" | mysql -uroot -pvagrant
+    echo "create database if not exists \`$NAME\` character set utf8" | mysql -uroot -pvagrant
     cat /vagrant/prj/$NAME/dump.sql | mysql $NAME
   fi
 }
@@ -187,7 +161,7 @@ function _install_mysql {
 }
 
 function _allow_mysql_connect_from_any_host {
-  mysql -uroot -pvagrant -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY 'vagrant WITH GRANT OPTION; FLUSH PRIVILEGES;"
+  mysql -uroot -pvagrant -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY 'vagrant' WITH GRANT OPTION; FLUSH PRIVILEGES;"
   sed -i 's/127\.0\.0\.1/0.0.0.0/g' /etc/mysql/my.cnf
 }
 
@@ -216,5 +190,3 @@ default_character_set = utf8
 no-tablespaces
 EOL
 }
-
-_do_magic

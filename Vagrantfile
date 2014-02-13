@@ -7,7 +7,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.network :private_network, ip: "192.168.56.66"
   config.vm.synced_folder ".", "/vagrant", nfs: true
 
-  config.vm.provision :shell, :path => "bootstrap.sh"
+  config.vm.provision :shell, :path => "lib/bootstrap.sh"
   config.vm.provider "virtualbox" do |v|
     v.customize ["modifyvm", :id, "--memory", "512"]
     v.customize ["modifyvm", :id, "--ioapic", "on"]
