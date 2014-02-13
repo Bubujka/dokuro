@@ -1,0 +1,2 @@
+#!/bin/bash
+mysqldump -h 192.168.56.66 -u root -pvagrant $@
