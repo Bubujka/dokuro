@@ -1,0 +1,5 @@
+#!/bin/bash
+cd prj
+for dir in *; do
+  echo http://$dir.dokuro.ru
+done
