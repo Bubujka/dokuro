@@ -25,15 +25,19 @@ function _create_configs_for_all_projects {
   for NAME in * ; do
     _create_php_pool_config $NAME
     _create_nginx_config $NAME
-    _create_mysql_database_if_we_have_dump $NAME
+    _create_mysql_database_and_fill_it $NAME
   done
 }
 
-function _create_mysql_database_if_we_have_dump {
+function _create_mysql_database_and_fill_it {
   NAME=$1
+  echo "drop database if exists \`$NAME\`" | mysql -uroot -pvagrant
+  echo "create database \`$NAME\` character set utf8" | mysql -uroot -pvagrant
   if [ -f /vagrant/prj/$NAME/dump.sql ] ; then
-    echo "create database if not exists \`$NAME\` character set utf8" | mysql -uroot -pvagrant
     cat /vagrant/prj/$NAME/dump.sql | mysql $NAME
+  fi
+  if [ -f /vagrant/prj/$NAME/dump.sql.gz ] ; then
+    cat /vagrant/prj/$NAME/dump.sql.gz | gunzip | mysql $NAME
   fi
 }
 function _create_nginx_config {
