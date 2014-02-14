@@ -39,12 +39,17 @@ function _create_mysql_database_if_we_have_dump {
 function _create_nginx_config {
   NAME=$1
   cp /vagrant/prj/$NAME/nginx.conf /etc/nginx/prj-include/$NAME
+
+  ROOT_DIR="/vagrant/prj/$NAME"
+  if [ -d /vagrant/prj/$NAME/www ]; then
+    ROOT_DIR="/vagrant/prj/$NAME/www"
+  fi 
   cat << EOF > /etc/nginx/sites-enabled/$NAME
 server {
   listen *:80;
   server_name $NAME.dokuro.ru;
   set \$php_pool unix:/var/run/php5-fpm-$NAME.sock;
-  root /vagrant/prj/$NAME;
+  root $ROOT_DIR;
   location /.git { deny   all; }
   include /etc/nginx/prj-include/$NAME;
 }
