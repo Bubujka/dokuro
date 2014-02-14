@@ -1,3 +1,10 @@
+function _clear_all_prj_configs {
+  rm /etc/nginx/prj-include/*
+  rm /etc/nginx/sites-enabled/*
+  rm /etc/php5/fpm/pool.d/*
+}
+
+
 function _remove_default_pool {
   rm /etc/php5/fpm/pool.d/www.conf
 }
