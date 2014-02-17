@@ -1,7 +1,0 @@
-#!/bin/bash
-. /vagrant/lib/install.sh
-_clear_all_prj_configs
-
-_create_configs_for_all_projects 
-_run_install_on_each_project 
-_restart_all_servers 
