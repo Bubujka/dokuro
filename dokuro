@@ -254,6 +254,16 @@ function _run_watch_script {
   fi
 }
 
+function _print_all_sites_urls {
+  cd /vagrant/prj
+  green_echo "Active projects:"
+  for NAME in * ; do
+    if [ -f $NAME/nginx.conf ] ; then
+      green_echo " http://$NAME.dokuro.ru"
+    fi
+  done
+}
+
 function __reload_all_projects {
     _clear_all_prj_configs
     _stop_all_screen_sessions
@@ -261,6 +271,8 @@ function __reload_all_projects {
     _init_all_projects
 
     _restart_all_servers 
+
+    _print_all_sites_urls
 }
 
 case "$1" in
