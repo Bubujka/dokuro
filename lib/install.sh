@@ -90,13 +90,8 @@ request_terminate_timeout = 20
 chdir = /
 catch_workers_output = yes
 env[MYSQL_DATABASE]='mysql://root:vagrant@localhost/$NAME'
-php_value[session.save_path]=/tmp/sessions
+php_value[session.save_path]=/tmp
 EOF
-}
-
-function _create_directory_for_sessions {
-  mkdir /tmp/sessions
-  chown vagrant /tmp/sessions
 }
 
 function _install_helper_software {

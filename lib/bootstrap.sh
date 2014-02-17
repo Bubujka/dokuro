@@ -12,7 +12,6 @@ _remove_default_pool
 _chown_php_configs
 _enable_xdebug_profile
 _install_composer
-_create_directory_for_sessions
 
 _install_nginx
 _basic_configure_nginx
