@@ -213,7 +213,7 @@ function _install_ruby {
 }
 
 function _install_compass {
-  gem install compass
+  gem install compass rb-fsevent
 }
 
 function _stop_all_screen_sessions {
