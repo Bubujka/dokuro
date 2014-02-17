@@ -57,12 +57,15 @@ function _check_cname_exists {
 
 function _create_mysql_database_and_fill_it {
   NAME=$1
+  green_echo " - creating mysql database"
   echo "drop database if exists \`$NAME\`" | mysql -uroot -pvagrant
   echo "create database \`$NAME\` character set utf8" | mysql -uroot -pvagrant
   if [ -f /vagrant/prj/$NAME/dump.sql ] ; then
+    green_echo " - restoring dump.sql"
     cat /vagrant/prj/$NAME/dump.sql | mysql $NAME
   fi
   if [ -f /vagrant/prj/$NAME/dump.sql.gz ] ; then
+    green_echo " - restoring dump.sql.gz"
     cat /vagrant/prj/$NAME/dump.sql.gz | gunzip | mysql $NAME
   fi
 }
