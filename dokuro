@@ -241,7 +241,7 @@ function _install_ruby {
 }
 
 function _install_compass {
-  gem install compass rb-fsevent
+  gem install compass rb-fsevent rb-inotify
 }
 
 function _stop_all_screen_sessions {
