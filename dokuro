@@ -233,7 +233,8 @@ EOL
 }
 
 function _install_dokuro_system_wide_on_vagrant {
-  cp /vagrant/dokuro /usr/local/bin/
+  wget https://raw2.github.com/Bubujka/dokuro/master/dokuro -O /usr/local/bin/dokuro
+  chmod +x /usr/local/bin/dokuro
 }
 
 function _install_ruby {
