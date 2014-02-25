@@ -8,4 +8,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.synced_folder ".", "/vagrant", nfs: true
 
   config.vm.provision :shell, :path => "dokuro", :args => 'init'
+  if File.exists? File.expand_path "./Vagrant.config"
+    require File.expand_path "./Vagrant.config.rb"
+  end
 end
