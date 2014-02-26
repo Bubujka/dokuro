@@ -89,6 +89,7 @@ server {
   include /etc/nginx/prj-include/$NAME;
 }
 EOF
+  chown vagrant:vagrant /etc/nginx/sites-enabled/$NAME
   else
     red_echo ' - project doesn`t have nginx.conf'
   fi
