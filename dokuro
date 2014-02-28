@@ -43,7 +43,6 @@ function _init_all_projects {
     _create_nginx_config $NAME
     _create_mysql_database_and_fill_it $NAME
     _run_install_script $NAME
-    _run_watch_script $NAME
     _check_cname_exists $NAME
   done
 }
