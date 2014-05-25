@@ -1,5 +1,8 @@
 #!/bin/bash
 # vim: tabstop=4:softtabstop=4:shiftwidth=4:noexpandtab
+if [ -f /vagrant/config ] ; then
+	. /vagrant/config ;
+fi
 
 red_echo() {
 	echo -e "\e[1;31m$@\e[0m"
@@ -29,12 +32,16 @@ _chown_php_configs() {
 _run_install_script() {
 	NAME=$1
 	cd /vagrant/prj/$NAME
-	if [ -f ./install ] ; then
+	if [ -x /vagrant/prj/$NAME/install ] ; then
 		green_echo " - running ./install"
 		sudo -u vagrant ./install 2>&1 | sed 's/^/   ... /'
 	fi
 }
 
+_kill_all_screens() {
+	green_echo "Killing screens"
+	killall -KILL screen 
+}
 _init_all_projects() {
 	cd /vagrant/prj
 	for NAME in * ; do
@@ -43,6 +50,9 @@ _init_all_projects() {
 		_create_nginx_config $NAME
 		_create_mysql_database_and_fill_it $NAME
 		_run_install_script $NAME
+		if [ "$ENABLE_WATCH" = "yes" ] ; then
+			_run_watch_script $NAME
+		fi
 		_check_cname_exists $NAME
 	done
 }
@@ -257,9 +267,9 @@ _stop_all_screen_sessions() {
 _run_watch_script() {
 	NAME=$1
 	cd /vagrant/prj/$NAME
-	if [ -f ./watch ] ; then
+	if [ -f /vagrant/prj/$NAME/watch ] ; then
 		green_echo " - running ./watch"
-		screen -m -d sudo -u vagrant ./watch
+		screen -S $NAME -m -d sudo -u vagrant ./watch 2>&1 | sed 's/^/   ... /'
 	fi
 }
 
@@ -277,6 +287,7 @@ __reload_all_projects() {
 	_clear_all_prj_configs
 	_stop_all_screen_sessions
 
+	_kill_all_screens
 	_init_all_projects
 
 	_restart_all_servers
