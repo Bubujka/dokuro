@@ -29,7 +29,7 @@ _chown_php_configs() {
 _run_install_script() {
 	NAME=$1
 	cd /vagrant/prj/$NAME
-	if [ -f ./watch ] ; then
+	if [ -f ./install ] ; then
 		green_echo " - running ./install"
 		sudo -u vagrant ./install 2>&1 | sed 's/^/   ... /'
 	fi
