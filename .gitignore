@@ -2,3 +2,4 @@
 prj
 !prj/.lock
 Vagrant.config.rb
+install

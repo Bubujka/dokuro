@@ -243,6 +243,13 @@ _install_compass() {
 	gem install compass rb-fsevent rb-inotify
 }
 
+_custom_install() {
+	if [ -f /vagrant/install ] ; then
+		green_echo "Custom install"
+		bash /vagrant/install 2>&1 | sed 's/^/ ... /'
+	fi
+}
+
 _stop_all_screen_sessions() {
 	pkill screen
 }
@@ -299,6 +306,7 @@ case "$1" in
 
 		_install_ruby
 		_install_compass
+		_custom_install
 
 		__reload_all_projects
 
