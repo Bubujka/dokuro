@@ -4,3 +4,5 @@ prj
 Vagrant.config.rb
 install
 config
+dump
+dump.tgz
